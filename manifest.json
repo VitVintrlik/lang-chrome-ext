@@ -1,9 +1,8 @@
 {
-    // Comments are accepted in the manifest, even though it is JSON.
     "manifest_version": 3,
-    "name": "Chrome Extension v3 Starter",
-    "description": "A minimal example of a chrome extension using manifest v3",
-    "version": "0.0.1",
+    "name": "Netflix Subtitle Translator",
+    "description": "Translate and explain Netflix subtitles with AI",
+    "version": "0.1.0",
     "icons": {
         "16": "logo/logo-16.png",
         "48": "logo/logo-48.png",
@@ -11,18 +10,21 @@
     },
     "options_page": "settings/settings.html",
     "action": {
-        "default_title": "Chrome Addon v3 Starter",
+        "default_title": "Netflix Subtitle Translator",
         "default_popup": "popup/popup.html"
     },
-    "permissions": [],
+    "permissions": [
+        "storage",
+        "activeTab"
+    ],
     "host_permissions": [
-        "*://*/*"
+        "*://*.netflix.com/*"
     ],
     "background": {
-        "service_worker": "service-worker.js"
+        "service_worker": "static/js/background.js"
     },
     "content_scripts": [{
-        "js": ["foreground.js"],
-        "matches": ["https://github.com/*"]
+        "js": ["static/js/content.js"],
+        "matches": ["*://*.netflix.com/*"]
     }]
 }
