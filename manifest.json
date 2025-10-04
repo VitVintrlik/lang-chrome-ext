@@ -15,16 +15,33 @@
     },
     "permissions": [
         "storage",
-        "activeTab"
+        "activeTab",
+        "tabs"
     ],
     "host_permissions": [
-        "*://*.netflix.com/*"
+        "*://*.netflix.com/*",
+        "*://*.youtube.com/*",
+        "*://*.youtu.be/*",
+        "*://*.hulu.com/*",
+        "*://*.disney.com/*",
+        "*://*.amazon.com/*",
+        "*://*.vimeo.com/*",
+        "*://*.twitch.tv/*"
     ],
     "background": {
         "service_worker": "static/js/background.js"
     },
     "content_scripts": [{
         "js": ["static/js/content.js"],
-        "matches": ["*://*.netflix.com/*"]
+        "matches": [
+            "*://*.netflix.com/*",
+            "*://*.youtube.com/*",
+            "*://*.youtu.be/*",
+            "*://*.hulu.com/*",
+            "*://*.disney.com/*",
+            "*://*.amazon.com/*",
+            "*://*.vimeo.com/*",
+            "*://*.twitch.tv/*"
+        ]
     }]
 }
