@@ -7,18 +7,16 @@ function Popup() {
   const handleSelectText = async () => {
     try {
       setIsSelecting(true);
-      
-      // Get the active tab
+
       const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-      
+
       if (!tab.id) {
         console.error('No active tab found');
         return;
       }
 
-      // Send message to content script
       const response = await chrome.tabs.sendMessage(tab.id, { type: 'SELECT_TEXT' });
-      
+
       if (response?.success) {
         console.log('Select text command sent successfully');
       } else {
@@ -35,7 +33,7 @@ function Popup() {
     <div className="w-80 p-6 font-sans">
       <h2 className="text-xl font-bold text-gray-800 mb-2">Subtitle Translator</h2>
       <p className="text-gray-600 mb-4">Translate subtitles on any video platform with AI</p>
-      
+
       <div className="space-y-3">
         <button
           onClick={handleSelectText}
@@ -48,7 +46,7 @@ function Popup() {
         >
           {isSelecting ? 'Selecting...' : 'Select Text'}
         </button>
-        
+
         <button
           onClick={() => console.log('Settings clicked')}
           className="w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"

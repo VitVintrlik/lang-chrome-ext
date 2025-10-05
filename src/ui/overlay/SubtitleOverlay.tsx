@@ -1,6 +1,3 @@
-import React from 'react';
-import { createPortal } from 'react-dom';
-
 interface SubtitleOverlayProps {
   isVisible: boolean;
   subtitleText: string;
@@ -10,7 +7,9 @@ interface SubtitleOverlayProps {
 const SubtitleOverlay: React.FC<SubtitleOverlayProps> = ({ isVisible, subtitleText, onClose }) => {
   if (!isVisible) return null;
 
-  return createPortal(
+  console.log('Rendering SubtitleOverlay with text:', subtitleText);
+
+  return (
     <div className="fixed inset-0 bg-black bg-opacity-70 z-[9999] flex items-center justify-center">
       <div className="bg-white rounded-lg p-6 max-w-2xl mx-4 shadow-2xl">
         <div className="flex justify-between items-center mb-4">
@@ -18,16 +17,13 @@ const SubtitleOverlay: React.FC<SubtitleOverlayProps> = ({ isVisible, subtitleTe
           <button
             onClick={onClose}
             className="text-gray-500 hover:text-gray-700 text-2xl font-bold"
-            aria-label="Close"
           >
             ×
           </button>
         </div>
-
         <div className="text-lg text-gray-700 leading-relaxed mb-4">
           {subtitleText || 'No subtitle text found'}
         </div>
-
         <div className="flex gap-2">
           <button
             onClick={onClose}
@@ -40,8 +36,7 @@ const SubtitleOverlay: React.FC<SubtitleOverlayProps> = ({ isVisible, subtitleTe
           </button>
         </div>
       </div>
-    </div>,
-    document.body,
+    </div>
   );
 };
 

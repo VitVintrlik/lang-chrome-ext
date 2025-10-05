@@ -16,7 +16,8 @@
     "permissions": [
         "storage",
         "activeTab",
-        "tabs"
+        "tabs",
+        "scripting"
     ],
     "host_permissions": [
         "*://*.netflix.com/*",
@@ -33,6 +34,7 @@
     },
     "content_scripts": [{
         "js": ["static/js/content.js"],
+        "css": ["static/css/content.css"],
         "matches": [
             "*://*.netflix.com/*",
             "*://*.youtube.com/*",
