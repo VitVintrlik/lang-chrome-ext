@@ -1,0 +1,19 @@
+:root {
+  --font-family: system-ui, sans-serif;
+  --overlay-bg: rgba(0, 0, 0, 0.7);
+  --overlay-content-bg: #fff;
+  --overlay-radius: 12px;
+  --overlay-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  --transition-fast: 0.25s ease;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+#extension-root, #overlay-root {
+  all: initial;
+  font-family: var(--font-family);
+  position: relative;
+  display: block;
+}

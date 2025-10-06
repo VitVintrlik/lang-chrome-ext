@@ -1,70 +1,57 @@
-/**
- * Universal subtitle detection for any video platform
- */
+import { detectPlatform, Platform } from './platformDetector';
 
-export const findSubtitles = (): string | null => {
-  const subtitleSelectors = [
-    // Generic selectors
-    '[class*="subtitle"]',
-    '[class*="caption"]',
-    '[class*="text-track"]',
-    '[class*="cue"]',
-    '[data-testid*="subtitle"]',
-    '[data-testid*="caption"]',
-    '[aria-label*="subtitle"]',
-    '[aria-label*="caption"]',
+export const PLATFORM_SELECTORS: Record<Platform, string[]> = {
+  [Platform.YOUTUBE]: ['.ytp-caption-segment', '.caption-window', '.ytp-caption-window-container'],
+  [Platform.NETFLIX]: [
+    '.player-timedtext-text-container',
+    '.player-timedtext span',
+    '[class*="timedtext"]',
+  ],
+  [Platform.HBO]: ['.bitmovin-ui-subtitle-label', '[class*="subtitle"]'],
+  [Platform.DISNEY]: ['.dss-subtitle-renderer-cue', '[class*="subtitle"]'],
+  [Platform.PRIME]: ['.atvwebplayersdk-captions-text', '[class*="caption"]'],
+  [Platform.HULU]: ['.caption-text-window', '[class*="caption"]'],
+  [Platform.UNKNOWN]: [],
+};
 
-    // Platform-specific selectors
-    '.ytp-caption-segment', // YouTube
-    '[data-uia*="subtitle"]', // Netflix
-    '.player-caption', // Generic player
-    '.video-caption', // Generic video
-    '.subtitle-text', // Generic
-    '.caption-text', // Generic
+function findSubtitleElement() {
+  const platform = detectPlatform();
 
-    // High z-index elements (subtitles are usually on top)
-    '[style*="z-index"]',
-  ];
-
-  // Try each selector until we find subtitles
-  for (const selector of subtitleSelectors) {
-    try {
-      const elements = document.querySelectorAll(selector);
-      if (elements.length > 0) {
-        const textContent = Array.from(elements)
-          .map((el) => el.textContent?.trim())
-          .filter((text) => text && text.length > 0)
-          .join(' ');
-
-        if (textContent) {
-          console.log(`Found subtitles using selector: ${selector}`);
-          return textContent;
-        }
+  if (platform && PLATFORM_SELECTORS[platform]) {
+    for (const selector of PLATFORM_SELECTORS[platform]) {
+      const el = document.querySelector(selector);
+      if (el && isValidSubtitleElement(el)) {
+        return el;
       }
-    } catch (error) {
-      console.warn(`Error with selector ${selector}:`, error);
     }
   }
 
-  console.log('No subtitles found');
-  return null;
-};
+  //TODO fallback to heuristic analysis if no platform-specific selector matched
+}
 
-export const getPlatform = (): string => {
-  const hostname = window.location.hostname.toLowerCase();
+function isValidSubtitleElement(el: Element) {
+  if (!el) return false;
 
-  if (hostname.includes('youtube.com') || hostname.includes('youtu.be')) return 'youtube';
-  if (hostname.includes('netflix.com')) return 'netflix';
-  if (hostname.includes('hulu.com')) return 'hulu';
-  if (hostname.includes('disney.com')) return 'disney';
-  if (hostname.includes('amazon.com')) return 'amazon';
-  if (hostname.includes('vimeo.com')) return 'vimeo';
-  if (hostname.includes('twitch.tv')) return 'twitch';
+  // Must be visible
+  const style = window.getComputedStyle(el);
+  if (style.display === 'none' || style.visibility === 'hidden' || style.opacity === '0') {
+    return false;
+  }
 
-  return 'generic';
-};
+  // Check if it contains text (directly or in children)
+  const hasText = el.textContent && el.textContent.trim().length > 0;
 
-export const isVideoPaused = (): boolean => {
-  const video = document.querySelector('video');
-  return video ? video.paused : false;
-};
+  // Check positioning (subtitles are usually absolutely/fixed positioned)
+  const isPositioned = ['absolute', 'fixed'].includes(style.position);
+
+  return hasText && isPositioned;
+}
+
+export function getCurrentSubtitleText() {
+  const subtitleEl = findSubtitleElement();
+  console.log('Detected subtitle element:', subtitleEl);
+
+  if (!subtitleEl) return '';
+
+  return subtitleEl.textContent?.trim() || '';
+}

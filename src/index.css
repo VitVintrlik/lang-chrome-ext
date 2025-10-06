@@ -1,3 +1,3 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "styles/base/root.css";
+@import "styles/base/variables.css";
+@import "styles/components/overlay.css";
