@@ -56,3 +56,12 @@ src/ui/selector/
 - Efficient rendering of selectable segments
 - Context preservation for accurate translation
 - Fallback mechanisms for edge cases
+
+
+NON AI CONTENT BELOW
+TODOS:
+connect AIs for words explanations 
+implement instant translation on selection and load for AI explanation
+add styles and styling 
+clean up codebase
+add tests

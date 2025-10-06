@@ -3,6 +3,7 @@ import { pluginReact } from '@rsbuild/plugin-react';
 import { pluginSvgr } from '@rsbuild/plugin-svgr';
 import { pluginTypeCheck } from '@rsbuild/plugin-type-check';
 import { pluginSass } from '@rsbuild/plugin-sass';
+import { pluginNodePolyfill } from '@rsbuild/plugin-node-polyfill';
 
 export default defineConfig(({ envMode }) => {
   return {
@@ -62,6 +63,7 @@ export default defineConfig(({ envMode }) => {
       pluginSvgr({
         mixedImport: true,
       }),
+      pluginNodePolyfill(),
     ],
     tools: {
       rspack: {

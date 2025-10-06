@@ -12,13 +12,16 @@
   },
   "devDependencies": {
     "@rsbuild/core": "^1.3.4",
+    "@rsbuild/plugin-node-polyfill": "^1.4.2",
     "@rsbuild/plugin-react": "^1.1.1",
     "@rsbuild/plugin-sass": "^1.3.1",
     "@rsbuild/plugin-svgr": "^1.1.0",
     "@rsbuild/plugin-type-check": "^1.2.1",
     "@types/chrome": "^0.1.22",
+    "@types/kuromoji": "^0.1.3",
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
+    "@types/web": "^0.0.275",
     "@typescript-eslint/eslint-plugin": "^8.45.0",
     "@typescript-eslint/parser": "^8.45.0",
     "autoprefixer": "^10.4.0",
@@ -30,6 +33,7 @@
   "packageManager": "pnpm@10.14.0+sha512.ad27a79641b49c3e481a16a805baa71817a04bbe06a38d17e60e2eaee83f6a146c6a688125f5792e48dd5ba30e7da52a5cda4c3992b9ccf333f9ce223af84748",
   "dependencies": {
     "@types/node": "^24.6.2",
+    "kuromoji": "^0.1.2",
     "node": "^24.9.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"

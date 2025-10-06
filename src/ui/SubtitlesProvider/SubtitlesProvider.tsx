@@ -1,18 +1,31 @@
 import React, { createContext, FC, ReactNode, useContext, useEffect, useState } from 'react';
 import { getCurrentSubtitleText } from '../../utils/subtitleDetector';
 
-const SubtitlesContext = createContext({});
+type SubtitlesContextValue = {
+  subtitles?: string;
+};
 
-export const useSubtitles = () => useContext(SubtitlesContext);
+const SubtitlesContext = createContext<SubtitlesContextValue | undefined>(undefined);
 
-export const SubtitlesProvider: FC<{ children: ReactNode }> = ({ children }) => {
+export const useSubtitles = (): SubtitlesContextValue => {
+  const context = useContext(SubtitlesContext);
+  if (!context) {
+    throw new Error('useSubtitles must be used within a SubtitlesProvider');
+  }
+  return context;
+};
+
+type SubtitlesProviderProps = {
+  children: ReactNode;
+};
+
+export const SubtitlesProvider: FC<SubtitlesProviderProps> = ({ children }) => {
   const [subtitles, setSubtitles] = useState<string | undefined>();
 
   useEffect(() => {
-    const subtitles = getCurrentSubtitleText();
-    console.log('Detected subtitles:', subtitles);
-    setSubtitles(subtitles);
-  });
+    const current = getCurrentSubtitleText();
+    setSubtitles(current);
+  }, []);
 
   return <SubtitlesContext.Provider value={{ subtitles }}>{children}</SubtitlesContext.Provider>;
 };

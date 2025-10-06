@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PageOverlay from '../ui/overlay/PageOverlay';
 import { SubtitlesProvider } from '../ui/SubtitlesProvider';
+import WordSelector from '../ui/WordSelector/WordSelector';
 
 export default function RootOverlay() {
   const [isVisible, setIsVisible] = useState(false);
@@ -24,7 +25,9 @@ export default function RootOverlay() {
 
   return isVisible ? (
     <SubtitlesProvider>
-      <PageOverlay onClose={closeOverlay} />
+      <PageOverlay onClose={closeOverlay}>
+        <WordSelector />
+      </PageOverlay>
     </SubtitlesProvider>
   ) : null;
 }
