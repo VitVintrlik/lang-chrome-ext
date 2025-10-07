@@ -21,9 +21,11 @@ type SubtitlesProviderProps = {
 
 export const SubtitlesProvider: FC<SubtitlesProviderProps> = ({ children }) => {
   const [subtitles, setSubtitles] = useState<string | undefined>();
+  const [tokenizedSubtitles, setTokenizedSubtitles] = useState<string[] | undefined>();
 
   useEffect(() => {
     const current = getCurrentSubtitleText();
+
     setSubtitles(current);
   }, []);
 

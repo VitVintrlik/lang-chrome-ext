@@ -8,11 +8,14 @@ import { pluginNodePolyfill } from '@rsbuild/plugin-node-polyfill';
 export default defineConfig(({ envMode }) => {
   return {
     source: {
+      define: {
+        'process.env.GEMINI_API_KEY': JSON.stringify(process.env.GEMINI_API_KEY || ''),
+      },
       entry: {
-        background: './src/background/index.ts',
-        content: './src/content/index.tsx',
-        popup: './src/ui/popup/index.tsx',
-        options: './src/ui/options/index.tsx',
+        background: './src/chrome-ext-core/background/index.ts',
+        content: './src/chrome-ext-core/content/index.tsx',
+        popup: './src/chrome-ext-core/popup/index.tsx',
+        options: './src/chrome-ext-core/options/index.tsx',
       },
     },
     dev: {

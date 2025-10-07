@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import PageOverlay from '../ui/overlay/PageOverlay';
-import { SubtitlesProvider } from '../ui/SubtitlesProvider';
-import WordSelector from '../ui/WordSelector/WordSelector';
+import { SubtitlesProvider } from './SubtitlesProvider';
+import PageOverlay from './overlay/PageOverlay';
+import WordSelector from './WordSelector/WordSelector';
 
 export default function RootOverlay() {
   const [isVisible, setIsVisible] = useState(false);

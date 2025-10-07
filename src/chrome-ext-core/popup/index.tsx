@@ -1,13 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 
 function Popup() {
   const [isSelecting, setIsSelecting] = useState(false);
+  const [language, setLanguage] = useState('en');
+
+  useEffect(() => {
+    chrome.storage.local.get(['language'], (result) => {
+      if (result.language) setLanguage(result.language);
+    });
+  }, []);
+
+  const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newLanguage = e.target.value;
+    setLanguage(newLanguage);
+    chrome.storage.local.set({ language: newLanguage });
+  };
 
   const handleSelectText = async () => {
     try {
       setIsSelecting(true);
-
       const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
 
       if (!tab.id) {
@@ -33,6 +45,21 @@ function Popup() {
     <div className="w-80 p-6 font-sans">
       <h2 className="text-xl font-bold text-gray-800 mb-2">Subtitle Translator</h2>
       <p className="text-gray-600 mb-4">Translate subtitles on any video platform with AI</p>
+
+      <div className="mb-4">
+        <label htmlFor="language" className="block text-sm font-medium text-gray-700 mb-1">
+          Target Language
+        </label>
+        <select
+          id="language"
+          value={language}
+          onChange={handleLanguageChange}
+          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          <option value="en">English</option>
+          <option value="ja">Japanese</option>
+        </select>
+      </div>
 
       <div className="space-y-3">
         <button

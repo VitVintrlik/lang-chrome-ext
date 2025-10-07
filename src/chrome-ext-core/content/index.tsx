@@ -1,8 +1,8 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import RootOverlay from './RootOverlay';
+import RootOverlay from '../../ui';
 
-import '../index.css';
+import '../../styles/index.css';
 
 const container = document.createElement('div');
 container.id = 'subtitle-translator-overlay';

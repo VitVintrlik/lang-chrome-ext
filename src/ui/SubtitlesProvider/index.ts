@@ -1,1 +1,1 @@
-export { SubtitlesProvider, useSubtitles } from './SubtitlesProvider';
+export { SubtitlesProvider, useSubtitles } from '../Providers/SubtitlesProvider';
